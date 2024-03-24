@@ -1,0 +1,14 @@
+{
+  "semi": false,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "importOrder": [
+    "<THIRD_PARTY_MODULES>",
+    "^(@hono/(.*)$)",
+    "",
+    "^(~/*)",
+    "",
+    "[./]"
+  ],
+  "plugins": ["@ianvs/prettier-plugin-sort-imports"]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "alq",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "^3.2.5",
+    "turbo": "^1.13.0"
+  },
+  "engines": {
+    "node": "20.10.0"
+  },
+  "packageManager": "pnpm@8.14.2"
+}

@@ -1,0 +1,21 @@
+{
+  "name": "@alq/worker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/worker.ts",
+  "scripts": {
+    "dev": "tsx --watch src/worker.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "tsx": "^4.7.1",
+    "typescript": "^5.4.3"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  }
+}
