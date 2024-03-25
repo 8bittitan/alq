@@ -1,0 +1,8 @@
+{
+  "name": "@alq/validators",
+  "main": "./src/index.ts",
+  "dependencies": {
+    "@alq/config": "workspace:*",
+    "zod": "^3.22.4"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "extends": "@alq/config/base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "lib": ["ESNext"]
+  },
+  "exclude": ["dist"]
+}

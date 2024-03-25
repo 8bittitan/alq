@@ -5,6 +5,7 @@
   "importOrder": [
     "<THIRD_PARTY_MODULES>",
     "^(@hono/(.*)$)",
+    "^(@alq/(.*)$)",
     "",
     "^(~/*)",
     "",

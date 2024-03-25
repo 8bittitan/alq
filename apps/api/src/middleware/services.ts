@@ -1,6 +1,6 @@
 import type { MiddlewareHandler } from 'hono'
+import { Algolia } from '@alq/algolia'
 
-import { Algolia } from '~/lib/algolia'
 import { HonoEnv } from '~/server/env'
 
 export function initServices(): MiddlewareHandler<HonoEnv> {

@@ -1,4 +1,5 @@
-import { Algolia } from '~/lib/algolia'
+import { Algolia } from '@alq/algolia'
+
 import type { Env } from '~/lib/env'
 
 export type ServiceContext = {

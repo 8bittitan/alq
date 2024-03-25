@@ -17,6 +17,10 @@ app.get('/routes', (c) => {
   return c.json(routes)
 })
 
+app.post('/endpoint', (c) => {
+  return c.json({ message: 'Hello, world!' })
+})
+
 const handler = {
   fetch: (req: Request, env: Env, executionCtx: ExecutionContext) => {
     const parsedEnv = envSchema.safeParse(env)
