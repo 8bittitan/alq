@@ -1,13 +1,6 @@
 {
+  "extends": "@alq/config/base.json",
   "compilerOptions": {
-    "composite": false,
-    "declaration": true,
-    "declarationMap": true,
-    "esModuleInterop": true,
-    "inlineSources": false,
-    "moduleResolution": "node",
-    "preserveWatchOutput": true,
-    "downlevelIteration": true,
     "target": "esnext",
     "lib": ["esnext"],
     "baseUrl": "./",
@@ -18,21 +11,15 @@
     "resolveJsonModule": true,
     "allowJs": true,
     "checkJs": false,
-    "strict": true,
     "noEmit": true,
-    "isolatedModules": true,
     "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
     "strictBindCallApply": true,
     "strictPropertyInitialization": true,
     "noImplicitThis": true,
     "useUnknownInCatchVariables": true,
-    "alwaysStrict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "skipLibCheck": true
+    "alwaysStrict": true
   },
   "exclude": ["node_modules"]
 }

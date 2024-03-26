@@ -1,16 +1,14 @@
-import { ofetch as fetch, type FetchOptions } from 'ofetch'
+import algoliasearch, { type SearchIndex } from 'algoliasearch'
 import type { Job, Status } from '@alq/validators'
 
-type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
+import { createFetchRequester } from '@algolia/requester-fetch'
 
 type AlgoliaResponse = {
   hits: Job[]
 }
 
 export class Algolia {
-  private apiKey: string
-  private appId: string
-  private indexName: string
+  private client: SearchIndex
 
   constructor({
     apiKey,
@@ -21,39 +19,28 @@ export class Algolia {
     appId: string
     indexName: string
   }) {
-    this.apiKey = apiKey
-    this.appId = appId
-    this.indexName = indexName
-  }
-
-  private async request<T>(
-    endpoint: string,
-    method: RequestMethod,
-    data?: Record<string, unknown>,
-  ): Promise<T> {
-    const options: FetchOptions = {
-      method,
-      headers: {
-        'X-Algolia-API-Key': this.apiKey,
-        'X-Algolia-Application-Id': this.appId,
-      },
-      parseResponse: JSON.parse,
-    }
-
-    if (data) {
-      options.body = data
-    }
-
-    return await fetch(
-      `https://${this.appId}.algolia.net/1${endpoint}`,
-      options,
-    ).catch((err) => {
-      throw new Error(err)
+    const algolia = algoliasearch(appId, apiKey, {
+      requester: createFetchRequester(),
     })
+
+    this.client = algolia.initIndex(indexName)
   }
 
-  public async saveObject(job: Job) {
-    return await this.request(`/indexes/${this.indexName}`, 'POST', job)
+  public async queueJob(job: Job): Promise<Job> {
+    const { objectID } = await this.client.saveObject(
+      {
+        ...job,
+        status: 'queued',
+      },
+      {
+        autoGenerateObjectIDIfNotExist: true,
+      },
+    )
+
+    return {
+      ...job,
+      objectID,
+    }
   }
 
   public saveObjects() {
@@ -61,39 +48,40 @@ export class Algolia {
     throw new Error('Not implemented yet')
   }
 
-  public async getObject() {
-    return await this.request<AlgoliaResponse>(
-      `/indexes/${this.indexName}?hitsPerPage=1&facetFilters=status:queued`,
-      'GET',
-    )
+  public async getJob(): Promise<AlgoliaResponse> {
+    return await this.client.search<Job>('', {
+      facetFilters: 'status:queued',
+      hitsPerPage: 1,
+    })
+  }
+
+  private async updateJob(updatedJob: Job) {
+    return await this.client.saveObject(updatedJob)
   }
 
   public async updateJobStatus(job: Job, newStatus: Status) {
-    return await this.request(
-      `/indexes/${this.indexName}/${job.objectID}`,
-      'PUT',
-      {
-        ...job,
-        status: newStatus,
-      },
-    )
+    const updatedJob = {
+      ...job,
+      status: newStatus,
+    }
+
+    await this.updateJob(updatedJob)
+
+    return updatedJob
   }
 
   public async updateJobRetries(job: Job) {
-    return await this.request(
-      `/indexes/${this.indexName}/${job.objectID}`,
-      'PUT',
-      {
-        ...job,
-        retries: job.retries - 1,
-      },
-    )
+    const updatedJob = {
+      ...job,
+      retries: job.retries - 1,
+    }
+
+    await this.updateJob(updatedJob)
+
+    return updatedJob
   }
 
   public async deleteJob(job: Job) {
-    return await this.request(
-      `/indexes/${this.indexName}/${job.objectID}`,
-      'DELETE',
-    )
+    await this.client.deleteObject(job.objectID!)
   }
 }

@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@alq/algolia": "workspace:*",
+    "@alq/config": "workspace:*",
     "@alq/validators": "workspace:*",
     "dotenv": "^16.4.5",
     "ofetch": "^1.3.4"

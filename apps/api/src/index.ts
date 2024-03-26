@@ -1,10 +1,12 @@
 import { Env, envSchema } from '~/lib/env'
+import { registerV1AuthRoutes } from '~/routes/v1_auth'
 import { registerV1BatchRoute } from '~/routes/v1_batch'
 import { registerV1EnqueueRoute } from '~/routes/v1_enqueue'
 import { createApp } from '~/server/app'
 
 const app = createApp()
 
+registerV1AuthRoutes(app)
 registerV1EnqueueRoute(app)
 registerV1BatchRoute(app)
 

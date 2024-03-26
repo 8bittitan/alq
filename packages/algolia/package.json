@@ -7,7 +7,9 @@
     "@alq/config": "workspace:*"
   },
   "dependencies": {
+    "@algolia/requester-fetch": "^4.22.1",
     "@alq/validators": "workspace:*",
+    "algoliasearch": "^4.22.1",
     "ofetch": "^1.3.4"
   }
 }

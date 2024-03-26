@@ -16,7 +16,7 @@ const algolia = new Algolia({
 async function work() {
   console.log('Worker is running')
   while (true) {
-    const data = await algolia.getObject()
+    const data = await algolia.getJob()
 
     const job = data.hits[0]
 

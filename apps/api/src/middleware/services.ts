@@ -1,6 +1,8 @@
 import type { MiddlewareHandler } from 'hono'
 import { Algolia } from '@alq/algolia'
 
+import { createAuth } from '~/lib/auth'
+import { createDb } from '~/lib/db'
 import { HonoEnv } from '~/server/env'
 
 export function initServices(): MiddlewareHandler<HonoEnv> {
@@ -11,8 +13,13 @@ export function initServices(): MiddlewareHandler<HonoEnv> {
       indexName: c.env.ALGOLIA_INDEX_NAME,
     })
 
+    const db = createDb(c.env)
+    const auth = createAuth(c.env, db)
+
     c.set('services', {
       algolia,
+      auth,
+      db,
     })
 
     await next()
