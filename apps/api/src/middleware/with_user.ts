@@ -1,5 +1,6 @@
 import { MiddlewareHandler } from 'hono'
-import { getCookie } from 'hono/cookie'
+
+// import { getCookie } from 'hono/cookie'
 
 import { HonoEnv } from '~/server/env'
 
@@ -7,9 +8,9 @@ export function withUser(): MiddlewareHandler<HonoEnv> {
   return async (c, next) => {
     const { auth } = c.get('services')
 
-    const sessionId = getCookie(c, auth.sessionCookieName) ?? null
+    const [bearer, sessionId] = c.req.header('Authorization')?.split(' ') ?? []
 
-    if (!sessionId) {
+    if (!sessionId || !bearer || bearer !== 'Bearer') {
       c.set('user', null)
 
       return next()

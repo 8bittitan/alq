@@ -9,6 +9,7 @@ export function createAuth(env: Env, db: DB) {
 
   const auth = new Lucia(adapter, {
     sessionCookie: {
+      expires: false,
       attributes: {
         secure: env.ENVIRONMENT === 'production',
       },

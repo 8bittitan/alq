@@ -6,7 +6,8 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "dev:web": "turbo dev --filter=!./apps/worker"
   },
   "keywords": [],
   "author": "",
