@@ -1,7 +1,6 @@
+import { createFetchRequester } from '@algolia/requester-fetch'
 import algoliasearch, { type SearchIndex } from 'algoliasearch'
 import type { Job, Status } from '@alq/validators'
-
-import { createFetchRequester } from '@algolia/requester-fetch'
 
 type AlgoliaResponse = {
   hits: Job[]
@@ -43,9 +42,15 @@ export class Algolia {
     }
   }
 
-  public saveObjects() {
-    // TODO: Implement
-    throw new Error('Not implemented yet')
+  public async queueJobs(jobs: Job[]) {
+    const { objectIDs } = await this.client.saveObjects(jobs, {
+      autoGenerateObjectIDIfNotExist: true,
+    })
+
+    return jobs.map((job, index) => ({
+      ...job,
+      objectID: objectIDs[index],
+    }))
   }
 
   public async getJob(): Promise<AlgoliaResponse> {
