@@ -1,4 +1,4 @@
-import { ofetch as fetch, type FetchOptions } from 'ofetch'
+import { $fetch, type FetchOptions } from 'ofetch'
 import type { Job } from '@alq/validators'
 
 export const processJob = async (job: Job) => {
@@ -13,7 +13,11 @@ export const processJob = async (job: Job) => {
       reqOptions.body = JSON.stringify(job.payload)
     }
 
-    await fetch(job.handler, reqOptions)
+    if (job.headers && Object.keys(job.headers).length > 0) {
+      reqOptions.headers = job.headers
+    }
+
+    await $fetch(job.handler, reqOptions)
 
     return true
   } catch (err) {

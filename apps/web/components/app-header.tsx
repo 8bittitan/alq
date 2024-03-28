@@ -78,7 +78,7 @@ export default function AppHeader({ username }: { username: string }) {
           <div className="mt-auto">
             <Card>
               <CardHeader>
-                <CardTitle>ALQ is Open Source</CardTitle>
+                <CardTitle className="text-lg">ALQ is Open Source</CardTitle>
                 <CardDescription>
                   This was built as a personal project and is open source.
                 </CardDescription>

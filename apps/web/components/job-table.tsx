@@ -10,7 +10,7 @@ import {
   useReactTable,
   type ColumnDef,
 } from '@tanstack/react-table'
-import { useState } from 'react'
+import { PropsWithChildren, useState } from 'react'
 import { Job } from '@alq/validators'
 
 import { Button } from './ui/button'
@@ -23,6 +23,12 @@ import {
   TableHeader,
   TableRow,
 } from './ui/table'
+
+const Code = ({ children }: PropsWithChildren) => (
+  <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+    {children}
+  </code>
+)
 
 const columns: ColumnDef<Job>[] = [
   {
@@ -58,9 +64,9 @@ const columns: ColumnDef<Job>[] = [
     accessorKey: 'handler',
     header: () => 'Handler',
     cell: ({ row }) => (
-      <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+      <Code>
         {row.original.method} {row.getValue('handler')}
-      </code>
+      </Code>
     ),
   },
   {
@@ -68,9 +74,15 @@ const columns: ColumnDef<Job>[] = [
     header: () => 'Payload',
     cell: ({ row }) =>
       row.getValue('payload') ? (
-        <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
-          {JSON.stringify(row.getValue('payload'))}
-        </code>
+        <Code>{JSON.stringify(row.getValue('payload'))}</Code>
+      ) : null,
+  },
+  {
+    accessorKey: 'headers',
+    header: () => 'Headers',
+    cell: ({ row }) =>
+      row.getValue('headers') ? (
+        <Code>{JSON.stringify(row.getValue('headers'))}</Code>
       ) : null,
   },
 ]

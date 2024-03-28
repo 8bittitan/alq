@@ -17,6 +17,7 @@ export const JobSchema = z.object({
   retries: z.number().optional().default(3),
   status: StatusSchema.default('queued'),
   apikey: z.string(),
+  headers: z.record(z.string()).optional(),
 })
 
 export type Job = z.infer<typeof JobSchema>

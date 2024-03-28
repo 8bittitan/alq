@@ -38,7 +38,7 @@ export default async function AppLayout({ children }: PropsWithChildren) {
           <div className="p-4 mt-auto">
             <Card>
               <CardHeader className="p-2 pt-0 md:p-4">
-                <CardTitle>ALQ is Open Source</CardTitle>
+                <CardTitle className="text-lg">ALQ is Open Source</CardTitle>
                 <CardDescription>
                   This was built as a personal project and is open source.
                 </CardDescription>
