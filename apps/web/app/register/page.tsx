@@ -8,24 +8,24 @@ import {
   CardTitle,
 } from '~/components/ui/card'
 
-import LoginForm from './form'
+import RegisterForm from './form'
 
-export default function LoginPage() {
+export default function RegisterPage() {
   return (
     <div className="pt-16">
       <Card className="max-w-sm mx-auto">
         <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardTitle className="text-2xl">Sign up</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            Enter your email below to register for an account
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <LoginForm />
+          <RegisterForm />
           <div className="mt-4 text-sm text-center">
-            Don&apos;t have an account?{' '}
-            <Link href="/register" className="underline">
-              Sign up.
+            Already have an account?{' '}
+            <Link href="/login" className="underline">
+              Login.
             </Link>
           </div>
         </CardContent>

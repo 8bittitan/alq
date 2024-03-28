@@ -1,5 +1,12 @@
 import { z } from 'zod'
 
+export const AuthSchema = z.object({
+  username: z.string().email(),
+  password: z.string().min(6),
+})
+
+export const UsernameSchema = AuthSchema.pick({ username: true })
+
 const StatusSchema = z.enum(['queued', 'done', 'failed'])
 
 export const JobSchema = z.object({

@@ -1,4 +1,5 @@
 import { Env, envSchema } from '~/lib/env'
+import { registerV1ApiKeysRoutes } from '~/routes/v1_apikeys'
 import { registerV1AuthRoutes } from '~/routes/v1_auth'
 import { registerV1BatchRoute } from '~/routes/v1_batch'
 import { registerV1EnqueueRoute } from '~/routes/v1_enqueue'
@@ -9,6 +10,7 @@ const app = createApp()
 registerV1AuthRoutes(app)
 registerV1EnqueueRoute(app)
 registerV1BatchRoute(app)
+registerV1ApiKeysRoutes(app)
 
 app.get('/routes', (c) => {
   const routes = app.routes.map((r) => ({
@@ -22,6 +24,8 @@ app.get('/routes', (c) => {
 app.post('/endpoint', (c) => {
   return c.json({ message: 'Hello, world!' })
 })
+
+export type App = typeof app
 
 const handler = {
   fetch: (req: Request, env: Env, executionCtx: ExecutionContext) => {

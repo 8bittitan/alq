@@ -1,7 +1,6 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -12,7 +11,7 @@ import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
 import { cn } from '~/lib/utils'
 
-export default function LoginForm() {
+export default function RegisterForm() {
   const router = useRouter()
   const {
     handleSubmit,
@@ -28,7 +27,7 @@ export default function LoginForm() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const user = await fetch('http://localhost:8787/v1/login', {
+      const resp = await fetch('http://localhost:8787/v1/register', {
         method: 'POST',
         body: JSON.stringify(data),
         credentials: 'include',
@@ -37,7 +36,7 @@ export default function LoginForm() {
         },
       }).then((res) => res.json())
 
-      if (user.user) {
+      if (resp.user) {
         router.push('/app')
       }
     } catch (err) {
@@ -70,16 +69,11 @@ export default function LoginForm() {
         )}
       </div>
       <div className="grid gap-2">
-        <div className="flex items-center">
-          <Label htmlFor="password">Password</Label>
-          <Link href="#" className="inline-block ml-auto text-sm underline">
-            Forgot your password?
-          </Link>
-        </div>
+        <Label htmlFor="password">Password</Label>
         <Input id="password" type="password" {...register('password')} />
       </div>
       <Button type="submit" className="w-full">
-        Login
+        Sign up
       </Button>
     </form>
   )

@@ -12,6 +12,7 @@ export function withUser(): MiddlewareHandler<HonoEnv> {
 
     if (!sessionId || !bearer || bearer !== 'Bearer') {
       c.set('user', null)
+      c.set('session', null)
 
       return next()
     }
@@ -28,6 +29,7 @@ export function withUser(): MiddlewareHandler<HonoEnv> {
       })
     }
     c.set('user', user)
+    c.set('session', session)
     return next()
   }
 }

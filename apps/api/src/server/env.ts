@@ -1,4 +1,4 @@
-import { User } from 'lucia'
+import { Session, User } from 'lucia'
 import { Algolia } from '@alq/algolia'
 
 import { Auth } from '~/lib/auth'
@@ -16,5 +16,6 @@ export type HonoEnv = {
   Variables: {
     services: ServiceContext
     user: User | null
+    session: Session | null
   }
 }
