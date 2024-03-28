@@ -3,6 +3,7 @@ import { registerV1ApiKeysRoutes } from '~/routes/v1_apikeys'
 import { registerV1AuthRoutes } from '~/routes/v1_auth'
 import { registerV1BatchRoute } from '~/routes/v1_batch'
 import { registerV1EnqueueRoute } from '~/routes/v1_enqueue'
+import { registerV1JobsRoutes } from '~/routes/v1_jobs'
 import { createApp } from '~/server/app'
 
 const app = createApp()
@@ -11,6 +12,7 @@ registerV1AuthRoutes(app)
 registerV1EnqueueRoute(app)
 registerV1BatchRoute(app)
 registerV1ApiKeysRoutes(app)
+registerV1JobsRoutes(app)
 
 app.get('/routes', (c) => {
   const routes = app.routes.map((r) => ({

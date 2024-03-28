@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers'
 import { z } from 'zod'
-import { UsernameSchema } from '@alq/validators'
+import { Job, UsernameSchema } from '@alq/validators'
 
 import { env } from '~/lib/env'
 
@@ -131,6 +131,25 @@ export async function deleteAccount() {
     console.error(err)
     return {
       success: false,
+    }
+  }
+}
+
+export async function getJobs(): Promise<{ jobs: Job[] }> {
+  const sessionId = getSessionId()
+
+  try {
+    const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/jobs`, {
+      credentials: 'include',
+      headers: {
+        Authorization: `Bearer ${sessionId}`,
+      },
+    }).then((res) => res.json())
+
+    return res
+  } catch (err) {
+    return {
+      jobs: [],
     }
   }
 }

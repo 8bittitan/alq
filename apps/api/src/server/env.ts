@@ -17,5 +17,6 @@ export type HonoEnv = {
     services: ServiceContext
     user: User | null
     session: Session | null
+    apikey: string
   }
 }

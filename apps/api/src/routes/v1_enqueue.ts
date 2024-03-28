@@ -8,15 +8,17 @@ export const registerV1EnqueueRoute = (app: App) => {
   app.post(
     '/v1/enqueue',
     withApiKey(),
-    zValidator('json', JobSchema),
+    zValidator('json', JobSchema.omit({ apikey: true })),
     async (c) => {
       const data = c.req.valid('json')
+      const apikey = c.get('apikey')
 
       const { algolia } = c.get('services')
 
       try {
         await algolia.queueJob({
           ...data,
+          apikey,
         })
       } catch (err) {
         return c.json({

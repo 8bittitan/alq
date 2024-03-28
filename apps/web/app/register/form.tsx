@@ -9,6 +9,7 @@ import { AuthSchema } from '@alq/validators'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
+import { env } from '~/lib/env'
 import { cn } from '~/lib/utils'
 
 export default function RegisterForm() {
@@ -27,7 +28,7 @@ export default function RegisterForm() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const resp = await fetch('http://localhost:8787/v1/register', {
+      const resp = await fetch(`${env.NEXT_PUBLIC_API_URL}/register`, {
         method: 'POST',
         body: JSON.stringify(data),
         credentials: 'include',

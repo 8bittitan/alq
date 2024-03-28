@@ -10,6 +10,7 @@ import { AuthSchema } from '@alq/validators'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
+import { env } from '~/lib/env'
 import { cn } from '~/lib/utils'
 
 export default function LoginForm() {
@@ -28,7 +29,7 @@ export default function LoginForm() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const user = await fetch('http://localhost:8787/v1/login', {
+      const user = await fetch(`${env.NEXT_PUBLIC_API_URL}/login`, {
         method: 'POST',
         body: JSON.stringify(data),
         credentials: 'include',

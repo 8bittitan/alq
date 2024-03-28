@@ -18,8 +18,8 @@ export function withApiKey(): MiddlewareHandler<HonoEnv> {
     }
 
     const dbApikey = await db.query.user.findFirst({
-      where(fields, operators) {
-        return operators.eq(fields.apiKey, apiKey)
+      where(fields, { eq }) {
+        return eq(fields.apiKey, apiKey)
       },
     })
 
@@ -31,6 +31,8 @@ export function withApiKey(): MiddlewareHandler<HonoEnv> {
         403,
       )
     }
+
+    c.set('apikey', dbApikey.apiKey)
 
     await next()
   }

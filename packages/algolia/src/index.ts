@@ -25,7 +25,7 @@ export class Algolia {
     this.client = algolia.initIndex(indexName)
   }
 
-  public async queueJob(job: Job): Promise<Job> {
+  public async queueJob(job: Job) {
     const { objectID } = await this.client.saveObject(
       {
         ...job,
@@ -88,5 +88,11 @@ export class Algolia {
 
   public async deleteJob(job: Job) {
     await this.client.deleteObject(job.objectID!)
+  }
+
+  public async jobsByApiKey(apikey: string): Promise<Job[]> {
+    const { hits } = await this.client.search<Job>(apikey)
+
+    return hits
   }
 }
