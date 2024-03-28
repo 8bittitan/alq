@@ -11,8 +11,9 @@ import {
   type ColumnDef,
 } from '@tanstack/react-table'
 import { PropsWithChildren, useState } from 'react'
-import { Job } from '@alq/validators'
+import { Job, Status } from '@alq/validators'
 
+import { Badge } from './ui/badge'
 import { Button } from './ui/button'
 import { Checkbox } from './ui/checkbox'
 import {
@@ -29,6 +30,28 @@ const Code = ({ children }: PropsWithChildren) => (
     {children}
   </code>
 )
+
+function getStatusBadge(status: Status) {
+  switch (status) {
+    case 'failed': {
+      return (
+        <Badge variant="destructive" className="uppercase">
+          {status}
+        </Badge>
+      )
+    }
+    case 'queued': {
+      return (
+        <Badge variant="secondary" className="uppercase">
+          {status}
+        </Badge>
+      )
+    }
+    default: {
+      return <Badge className="uppercase">{status}</Badge>
+    }
+  }
+}
 
 const columns: ColumnDef<Job>[] = [
   {
@@ -56,17 +79,16 @@ const columns: ColumnDef<Job>[] = [
   {
     accessorKey: 'status',
     header: () => 'Status',
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue('status')}</div>
-    ),
+    cell: ({ row }) => getStatusBadge(row.getValue('status')),
   },
   {
     accessorKey: 'handler',
     header: () => 'Handler',
     cell: ({ row }) => (
-      <Code>
-        {row.original.method} {row.getValue('handler')}
-      </Code>
+      <div className="flex space-x-2">
+        <Badge variant="outline">{row.original.method}</Badge>
+        <span>{row.getValue('handler')}</span>
+      </div>
     ),
   },
   {
