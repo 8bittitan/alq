@@ -6,8 +6,8 @@ import { Env } from '~/lib/env'
 
 export function createDb(env: Env) {
   const client = createClient({
-    url: env.DATABASE_URL,
-    authToken: env.DATABASE_AUTH_TOKEN,
+    url: env.TURSO_URL,
+    authToken: env.TURSO_AUTH_TOKEN,
   })
 
   return drizzle(client, { schema, logger: env.ENVIRONMENT === 'development' })

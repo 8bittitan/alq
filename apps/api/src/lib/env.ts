@@ -7,8 +7,8 @@ export const envSchema = z.object({
   ALGOLIA_APP_ID: z.string(),
   ALGOLIA_ADMIN_API_KEY: z.string(),
   ALGOLIA_INDEX_NAME: z.string(),
-  DATABASE_URL: z.string(),
-  DATABASE_AUTH_TOKEN: z.string(),
+  TURSO_URL: z.string(),
+  TURSO_AUTH_TOKEN: z.string(),
 })
 
 export type Env = z.infer<typeof envSchema>
