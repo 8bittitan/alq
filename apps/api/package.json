@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "tsc",
-    "deploy": "pnpm dlx wrangler deploy src/index.ts",
+    "deploy": "pnpm build && wrangler deploy --env staging",
     "dev": "pnpm build && wrangler dev",
     "test": "vitest --bail=1",
     "db:push": "drizzle-kit push:sqlite"
