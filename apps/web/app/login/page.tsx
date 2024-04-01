@@ -1,4 +1,7 @@
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
+import { z } from 'zod'
+import { AuthSchema } from '@alq/validators'
 
 import {
   Card,

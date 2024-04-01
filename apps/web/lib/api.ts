@@ -1,11 +1,12 @@
 import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 import { z } from 'zod'
 import { Job, UsernameSchema } from '@alq/validators'
 
 import { env } from '~/lib/env'
 
-const getSessionId = () => {
-  const cookie = cookies().get('auth_session')
+export const getSessionId = () => {
+  const cookie = cookies().get('alq_session')
   return cookie?.value ?? null
 }
 
@@ -18,7 +19,6 @@ export async function getUser() {
 
   try {
     const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/user`, {
-      credentials: 'include',
       headers: {
         Authorization: `Bearer ${sessionId}`,
       },
@@ -32,51 +32,11 @@ export async function getUser() {
   }
 }
 
-export async function logout() {
-  const sessionId = getSessionId()
-
-  try {
-    const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/logout`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        Authorization: `Bearer ${sessionId}`,
-      },
-    })
-    const data = await res.json()
-
-    return data
-  } catch (err) {
-    console.error(err)
-    return null
-  }
-}
-
 export async function getApiKeys() {
   const sessionId = getSessionId()
 
   try {
     const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/apikeys`, {
-      credentials: 'include',
-      headers: {
-        Authorization: `Bearer ${sessionId}`,
-      },
-    }).then((res) => res.json())
-
-    return res
-  } catch (err) {
-    console.error(err)
-    return null
-  }
-}
-
-export async function rollApiKey() {
-  const sessionId = getSessionId()
-
-  try {
-    const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/apikeys`, {
-      method: 'PUT',
-      credentials: 'include',
       headers: {
         Authorization: `Bearer ${sessionId}`,
       },
@@ -97,7 +57,6 @@ export async function updateUsername({
   try {
     const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/user`, {
       method: 'PUT',
-      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${sessionId}`,
@@ -120,7 +79,6 @@ export async function deleteAccount() {
   try {
     const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/user`, {
       method: 'DELETE',
-      credentials: 'include',
       headers: {
         Authorization: `Bearer ${sessionId}`,
       },
@@ -140,7 +98,6 @@ export async function getJobs(): Promise<{ jobs: Job[] }> {
 
   try {
     const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/jobs`, {
-      credentials: 'include',
       headers: {
         Authorization: `Bearer ${sessionId}`,
       },

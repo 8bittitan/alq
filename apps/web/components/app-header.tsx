@@ -12,8 +12,8 @@ import {
 } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 
+import { logout } from '~/actions/auth'
 import { Button } from '~/components/ui/button'
 import {
   DropdownMenu,
@@ -35,18 +35,10 @@ import {
 } from './ui/card'
 
 export default function AppHeader({ username }: { username: string }) {
-  const router = useRouter()
   const { theme, setTheme } = useTheme()
 
   const handleLogout = async () => {
-    const data = await fetch('/logout', {
-      method: 'POST',
-      credentials: 'include',
-    }).then((res) => res.json())
-
-    if (data.success) {
-      router.push('/login')
-    }
+    await logout()
   }
 
   return (

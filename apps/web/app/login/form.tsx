@@ -2,19 +2,17 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { AuthSchema } from '@alq/validators'
 
+import { login } from '~/actions/auth'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
-import { env } from '~/lib/env'
 import { cn } from '~/lib/utils'
 
 export default function LoginForm() {
-  const router = useRouter()
   const {
     handleSubmit,
     register,
@@ -29,18 +27,12 @@ export default function LoginForm() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const user = await fetch(`${env.NEXT_PUBLIC_API_URL}/login`, {
-        method: 'POST',
-        body: JSON.stringify(data),
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }).then((res) => res.json())
+      const formData = new FormData()
 
-      if (user.user) {
-        router.push('/app')
-      }
+      formData.append('username', data.username)
+      formData.append('password', data.password)
+
+      await login(formData)
     } catch (err) {
       console.error(err)
     }
@@ -77,7 +69,12 @@ export default function LoginForm() {
             Forgot your password?
           </Link>
         </div>
-        <Input id="password" type="password" {...register('password')} />
+        <Input
+          id="password"
+          type="password"
+          {...register('password')}
+          hasError={!!errors.password}
+        />
       </div>
       <Button type="submit" className="w-full">
         Login

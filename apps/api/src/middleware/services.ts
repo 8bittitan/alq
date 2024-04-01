@@ -14,7 +14,7 @@ export function initServices(): MiddlewareHandler<HonoEnv> {
     })
 
     const db = createDb(c.env)
-    const auth = createAuth(c.env, db)
+    const auth = createAuth(db)
 
     c.set('services', {
       algolia,
