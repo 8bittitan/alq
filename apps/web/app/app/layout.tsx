@@ -63,7 +63,7 @@ export default async function AppLayout({ children }: PropsWithChildren) {
           </div>
         </div>
         <div className="flex flex-col">
-          <AppHeader username={user.username} codeExamples={codeExamples} />
+          <AppHeader username={user.username} />
           {children}
         </div>
       </div>
