@@ -1,19 +1,17 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { AuthSchema } from '@alq/validators'
 
+import * as actions from '~/actions/auth'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
-import { env } from '~/lib/env'
 import { cn } from '~/lib/utils'
 
 export default function RegisterForm() {
-  const router = useRouter()
   const {
     handleSubmit,
     register,
@@ -28,18 +26,12 @@ export default function RegisterForm() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const resp = await fetch(`${env.NEXT_PUBLIC_API_URL}/register`, {
-        method: 'POST',
-        body: JSON.stringify(data),
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }).then((res) => res.json())
+      const fData = new FormData()
 
-      if (resp.user) {
-        router.push('/app')
-      }
+      fData.set('username', data.username)
+      fData.set('password', data.password)
+
+      await actions.register(fData)
     } catch (err) {
       console.error(err)
     }
