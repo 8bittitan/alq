@@ -9,6 +9,7 @@ export const envSchema = z.object({
   ALGOLIA_INDEX_NAME: z.string(),
   TURSO_URL: z.string(),
   TURSO_AUTH_TOKEN: z.string(),
+  SENTRY_DNS: z.string().optional(),
 })
 
 export type Env = z.infer<typeof envSchema>
