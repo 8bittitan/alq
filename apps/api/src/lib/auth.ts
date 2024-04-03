@@ -10,6 +10,7 @@ export function createAuth(db: DB) {
     getUserAttributes(databaseUserAttributes) {
       return {
         username: databaseUserAttributes.username,
+        apiKey: databaseUserAttributes.apiKey,
       }
     },
   })
