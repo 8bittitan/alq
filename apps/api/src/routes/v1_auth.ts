@@ -30,7 +30,7 @@ export function registerV1AuthRoutes(app: App) {
       return c.json(
         {
           success: false,
-          user: null,
+          session: null,
           error: 'Please try a different username.',
         },
         422,
@@ -38,16 +38,11 @@ export function registerV1AuthRoutes(app: App) {
     }
 
     const session = await auth.createSession(userId, {})
-    const sessionCookie = auth.createSessionCookie(session.id)
-
-    c.header('Set-Cookie', sessionCookie.serialize(), {
-      append: true,
-    })
 
     return c.json(
       {
-        user: {
-          username,
+        session: {
+          id: session.id,
         },
       },
       201,
@@ -68,8 +63,7 @@ export function registerV1AuthRoutes(app: App) {
     if (!existingUser) {
       return c.json(
         {
-          success: false,
-          user: null,
+          session: null,
         },
         422,
       )
@@ -83,23 +77,17 @@ export function registerV1AuthRoutes(app: App) {
     if (!validPassword) {
       return c.json(
         {
-          success: false,
-          user: null,
+          session: null,
         },
         422,
       )
     }
 
     const session = await auth.createSession(existingUser.id, {})
-    const sessionCookie = auth.createSessionCookie(session.id)
-
-    c.header('Set-Cookie', sessionCookie.serialize(), {
-      append: true,
-    })
 
     return c.json({
-      user: {
-        username,
+      session: {
+        id: session.id,
       },
     })
   })
@@ -176,12 +164,6 @@ export function registerV1AuthRoutes(app: App) {
     }
 
     await auth.invalidateSession(session.id)
-
-    const sessionCookie = auth.createBlankSessionCookie()
-
-    c.header('Set-Cookie', sessionCookie.serialize(), {
-      append: true,
-    })
 
     return c.json({
       success: true,

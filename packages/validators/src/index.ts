@@ -1,8 +1,12 @@
 import { z } from 'zod'
 
 export const AuthSchema = z.object({
-  username: z.string().email(),
-  password: z.string().min(6),
+  username: z.string().email({
+    message: 'Invalid email address',
+  }),
+  password: z.string().min(1, {
+    message: 'Password is required',
+  }),
 })
 
 export const UsernameSchema = AuthSchema.pick({ username: true })
@@ -20,5 +24,5 @@ export const JobSchema = z.object({
   headers: z.record(z.string()).optional(),
 })
 
-export type Job = z.infer<typeof JobSchema>
-export type Status = z.infer<typeof StatusSchema>
+export type Job = z.output<typeof JobSchema>
+export type Status = z.output<typeof StatusSchema>

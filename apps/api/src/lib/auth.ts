@@ -2,21 +2,15 @@ import { DrizzleSQLiteAdapter } from '@lucia-auth/adapter-drizzle'
 import { Lucia } from 'lucia'
 
 import { DB, session, user, User } from '~/lib/db'
-import { Env } from '~/lib/env'
 
-export function createAuth(env: Env, db: DB) {
+export function createAuth(db: DB) {
   const adapter = new DrizzleSQLiteAdapter(db, session, user)
 
   const auth = new Lucia(adapter, {
-    sessionCookie: {
-      expires: false,
-      attributes: {
-        secure: env.ENVIRONMENT === 'production',
-      },
-    },
     getUserAttributes(databaseUserAttributes) {
       return {
         username: databaseUserAttributes.username,
+        apiKey: databaseUserAttributes.apiKey,
       }
     },
   })

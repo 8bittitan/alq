@@ -2,6 +2,7 @@
 
 import {
   CircleUser,
+  Info,
   KeyRound,
   LogOut,
   Menu,
@@ -12,9 +13,26 @@ import {
 } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 
+import { logout } from '~/actions/auth'
+import CodeExamples from '~/components/code-examples'
+import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Button } from '~/components/ui/button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '~/components/ui/card'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '~/components/ui/dialog'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,28 +43,15 @@ import {
 } from '~/components/ui/dropdown-menu'
 import { Sheet, SheetContent, SheetTrigger } from '~/components/ui/sheet'
 
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from './ui/card'
+type Props = {
+  username: string
+}
 
-export default function AppHeader({ username }: { username: string }) {
-  const router = useRouter()
+export default function AppHeader({ username }: Props) {
   const { theme, setTheme } = useTheme()
 
   const handleLogout = async () => {
-    const data = await fetch('/logout', {
-      method: 'POST',
-      credentials: 'include',
-    }).then((res) => res.json())
-
-    if (data.success) {
-      router.push('/login')
-    }
+    await logout()
   }
 
   return (
@@ -106,7 +111,23 @@ export default function AppHeader({ username }: { username: string }) {
               </div>
             </form>
           </div> */}
-      <div className="ml-auto">
+      <div className="ml-auto flex gap-4">
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button size="icon" variant="outline" className="rounded-full">
+              <Info className="h-4 w-4" />
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-2xl">
+            <DialogHeader>
+              <DialogTitle>Example Request</DialogTitle>
+              <DialogDescription>
+                This is just an example of how to make a request
+              </DialogDescription>
+            </DialogHeader>
+            <CodeExamples />
+          </DialogContent>
+        </Dialog>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="secondary" size="icon" className="rounded-full">
