@@ -1,6 +1,7 @@
-import { ChevronDown } from 'lucide-react'
+import { ChevronDown, Copy } from 'lucide-react'
+import { toast } from 'sonner'
 
-import { useCodeExamples } from '~/components/code-provider'
+import { Example, useCodeExamples } from '~/components/code-provider'
 import { Button } from '~/components/ui/button'
 import {
   DropdownMenu,
@@ -9,26 +10,26 @@ import {
   DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu'
 
-type Props = {
-  example: string
+type CodeExampleProps = {
+  example: Example
 }
 
 export default function CodeExamples() {
   const { selectedCodeExample, setLanguage, examples } = useCodeExamples()
 
   return (
-    <div className="flex flex-col space-y-2">
+    <div className="">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
             variant="outline"
-            className="flex items-center gap-2 self-start"
+            className="flex items-center gap-2 self-start mb-2"
           >
             <span>{selectedCodeExample.language}</span>
             <ChevronDown className="h4- w-4 ml-2" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="max-w-56">
+        <DropdownMenuContent className="max-w-56" align="start">
           {examples.map((example) => (
             <DropdownMenuItem
               key={example.language}
@@ -39,16 +40,32 @@ export default function CodeExamples() {
           ))}
         </DropdownMenuContent>
       </DropdownMenu>
-      <Code example={selectedCodeExample.code} />
+      <Code example={selectedCodeExample} />
     </div>
   )
 }
 
-function Code({ example }: Props) {
+function Code({ example }: CodeExampleProps) {
+  const handleCopyCode = async () => {
+    await navigator.clipboard.writeText(example.copyString)
+
+    toast.success('Code example copied to clipboard')
+  }
+
   return (
-    <div
-      className="prose grid gap-4 py-4"
-      dangerouslySetInnerHTML={{ __html: example }}
-    />
+    <div className="relative">
+      <Button
+        size="icon"
+        variant="outline"
+        className="absolute top-4 right-4"
+        onClick={handleCopyCode}
+      >
+        <Copy className="h-4 w-4" />
+      </Button>
+      <div
+        className="prose"
+        dangerouslySetInnerHTML={{ __html: example.code }}
+      />
+    </div>
   )
 }

@@ -5,18 +5,15 @@ import { Example } from '~/components/code-provider'
 import { maskApiKey } from './apikey'
 import { env } from './env'
 
-export async function highlight(code: string, lang: BuiltinLanguage) {
+async function highlight(code: string, lang: BuiltinLanguage) {
   return await codeToHtml(code, { lang, theme: 'github-dark' })
 }
 
-export async function generateCodeExamples(user: {
-  apiKey: string
-}): Promise<Example[]> {
-  const javascript = await highlight(
-    `fetch('${env.NEXT_PUBLIC_API_URL}/enqueue', {
+function jsCodeExample(apiKey: string) {
+  return `fetch('${env.NEXT_PUBLIC_API_URL}/enqueue', {
   method: 'POST',
   headers: { 
-    'Authorization': 'Bearer ${maskApiKey(user.apiKey)}' 
+    'X-API-Key': '${apiKey}' 
   },
   body: JSON.stringify({
     payload: {
@@ -26,28 +23,26 @@ export async function generateCodeExamples(user: {
     handler: 'mydomain.com/test-endpoint',
     method: 'POST'
   })
-})`,
-    'javascript',
-  )
+})`
+}
 
-  const curl = await highlight(
-    `curl -X POST \\
--H 'Authorization: Bearer ${maskApiKey(user.apiKey)}' \\
--d '{ payload: { userId: 777, postId: 1234 }, handler: 'mydomain.com/test-endpoint', method: "POST" }' \\
-${env.NEXT_PUBLIC_API_URL}/enqueue
-`,
-    'shell',
-  )
+function curlCodeExamples(apiKey: string) {
+  return `curl -X POST \\
+  -H 'X-API-Key: ${apiKey}' \\
+  -d '{ payload: { userId: 777, postId: 1234 }, handler: 'mydomain.com/test-endpoint', method: "POST" }' \\
+  ${env.NEXT_PUBLIC_API_URL}/enqueue
+`
+}
 
-  const php = await highlight(
-    `$client = new GuzzleHttp\\Client();
+function phpCodeExample(apiKey: string) {
+  return `$client = new GuzzleHttp\\Client();
 
 $response = $client->request(
   'POST',
   '${env.NEXT_PUBLIC_API_URL}/enqueue',
   [
     'headers' => [
-      'Authorization' => 'Bearer ${maskApiKey(user.apiKey)}',
+      'X-API-Key' => '${apiKey}',
     ],
     'body' => [
       'payload' => [
@@ -60,13 +55,25 @@ $response = $client->request(
     ],
   ],
 );
-`,
-    'php',
-  )
+`
+}
+
+export async function generateCodeExamples(user: {
+  apiKey: string
+}): Promise<Example[]> {
+  const maskedApiKey = maskApiKey(user.apiKey)
+
+  const javascript = await highlight(jsCodeExample(maskedApiKey), 'javascript')
+  const curl = await highlight(curlCodeExamples(maskedApiKey), 'shell')
+  const php = await highlight(phpCodeExample(maskedApiKey), 'php')
+
+  const jsCopyString = jsCodeExample(user.apiKey)
+  const curlCopyString = curlCodeExamples(user.apiKey)
+  const phpCopyString = phpCodeExample(user.apiKey)
 
   return [
-    { language: 'javascript', code: javascript },
-    { language: 'shell', code: curl },
-    { language: 'php', code: php },
+    { language: 'javascript', code: javascript, copyString: jsCopyString },
+    { language: 'shell', code: curl, copyString: curlCopyString },
+    { language: 'php', code: php, copyString: phpCopyString },
   ]
 }

@@ -12,6 +12,7 @@ import { BuiltinLanguage } from 'shiki'
 export type Example = {
   code: string
   language: BuiltinLanguage
+  copyString: string
 }
 
 export type CodeExampleProviderProps = {
