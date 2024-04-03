@@ -5,7 +5,10 @@ import { processJob } from '~/processJob'
 
 config()
 
-const WORKER_TIMEOUT = 4_000
+// TODO: Move to env var
+const WORKER_TIMEOUT = process.env.WORKER_TIMEOUT
+  ? parseInt(process.env.WORKER_TIMEOUT)
+  : 10_000
 
 const algolia = new Algolia({
   apiKey: process.env.ALGOLIA_ADMIN_API_KEY!,
