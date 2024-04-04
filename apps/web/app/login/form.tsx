@@ -1,7 +1,6 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import Link from 'next/link'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -39,7 +38,7 @@ export default function LoginForm() {
 
       const resp = await login(formData)
 
-      if (resp.error) {
+      if (resp?.error) {
         setFormError(resp.error)
       }
     } catch (err) {
