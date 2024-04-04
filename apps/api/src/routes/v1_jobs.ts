@@ -1,5 +1,5 @@
 import { withUser } from '~/middleware/with_user'
-import { App } from '~/server/app'
+import type { App } from '~/server/app'
 
 export function registerV1JobsRoutes(app: App) {
   app.get('/v1/jobs', withUser(), async (c) => {

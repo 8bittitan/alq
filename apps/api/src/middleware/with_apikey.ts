@@ -1,6 +1,6 @@
-import { MiddlewareHandler } from 'hono'
+import type { MiddlewareHandler } from 'hono'
 
-import { HonoEnv } from '~/server/env'
+import type { HonoEnv } from '~/server/env'
 
 export function withApiKey(): MiddlewareHandler<HonoEnv> {
   return async (c, next) => {

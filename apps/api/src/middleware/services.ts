@@ -3,7 +3,7 @@ import { Algolia } from '@alq/algolia'
 
 import { createAuth } from '~/lib/auth'
 import { createDb } from '~/lib/db'
-import { HonoEnv } from '~/server/env'
+import type { HonoEnv } from '~/server/env'
 
 export function initServices(): MiddlewareHandler<HonoEnv> {
   return async (c, next) => {

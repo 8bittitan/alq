@@ -3,7 +3,7 @@ import { zValidator } from '@hono/zod-validator'
 import { JobSchema } from '@alq/validators'
 
 import { withApiKey } from '~/middleware/with_apikey'
-import { App } from '~/server/app'
+import type { App } from '~/server/app'
 
 const BatchRequest = z.array(JobSchema.omit({ apikey: true }))
 

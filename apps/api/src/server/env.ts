@@ -1,8 +1,8 @@
-import { Session, User } from 'lucia'
-import { Algolia } from '@alq/algolia'
+import type { Session, User } from 'lucia'
+import type { Algolia } from '@alq/algolia'
 
-import { Auth } from '~/lib/auth'
-import { DB } from '~/lib/db'
+import type { Auth } from '~/lib/auth'
+import type { DB } from '~/lib/db'
 import type { Env } from '~/lib/env'
 
 export type ServiceContext = {

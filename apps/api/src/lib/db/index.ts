@@ -2,7 +2,7 @@ import { createClient } from '@libsql/client'
 import { drizzle } from 'drizzle-orm/libsql'
 
 import * as schema from '~/lib/db/schema'
-import { Env } from '~/lib/env'
+import type { Env } from '~/lib/env'
 
 export function createDb(env: Env) {
   const client = createClient({

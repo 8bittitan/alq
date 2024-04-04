@@ -3,7 +3,7 @@ import { cors } from 'hono/cors'
 import { sentry } from '@hono/sentry'
 
 import { initServices } from '~/middleware/services'
-import { HonoEnv } from '~/server/env'
+import type { HonoEnv } from '~/server/env'
 
 export const createApp = () => {
   const app = new Hono<HonoEnv>()

@@ -3,7 +3,7 @@ import { eq } from 'drizzle-orm'
 import { generateApiKey } from '~/lib/api_key'
 import { user as userTable } from '~/lib/db'
 import { withUser } from '~/middleware/with_user'
-import { App } from '~/server/app'
+import type { App } from '~/server/app'
 
 export function registerV1ApiKeysRoutes(app: App) {
   app.get('/v1/apikeys', withUser(), async (c) => {

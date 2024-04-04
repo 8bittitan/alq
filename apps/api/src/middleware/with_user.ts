@@ -1,8 +1,8 @@
-import { MiddlewareHandler } from 'hono'
+import type { MiddlewareHandler } from 'hono'
 
 // import { getCookie } from 'hono/cookie'
 
-import { HonoEnv } from '~/server/env'
+import type { HonoEnv } from '~/server/env'
 
 export function withUser(): MiddlewareHandler<HonoEnv> {
   return async (c, next) => {

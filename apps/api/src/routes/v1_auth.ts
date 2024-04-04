@@ -6,7 +6,7 @@ import { AuthSchema } from '@alq/validators'
 import { generateApiKey } from '~/lib/api_key'
 import { user as userTable } from '~/lib/db'
 import { withUser } from '~/middleware/with_user'
-import { App } from '~/server/app'
+import type { App } from '~/server/app'
 
 export function registerV1AuthRoutes(app: App) {
   app.post('/v1/register', zValidator('json', AuthSchema), async (c) => {

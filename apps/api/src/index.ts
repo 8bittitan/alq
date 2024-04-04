@@ -1,4 +1,5 @@
-import { Env, envSchema } from '~/lib/env'
+import type { Env } from '~/lib/env'
+import { envSchema } from '~/lib/env'
 import { registerV1ApiKeysRoutes } from '~/routes/v1_apikeys'
 import { registerV1AuthRoutes } from '~/routes/v1_auth'
 import { registerV1BatchRoute } from '~/routes/v1_batch'
