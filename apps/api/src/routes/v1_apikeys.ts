@@ -1,3 +1,5 @@
+import { eq } from 'drizzle-orm'
+
 import { generateApiKey } from '~/lib/api_key'
 import { user as userTable } from '~/lib/db'
 import { withUser } from '~/middleware/with_user'
@@ -59,9 +61,12 @@ export function registerV1ApiKeysRoutes(app: App) {
     const newApiKey = generateApiKey()
 
     try {
-      await db.update(userTable).set({
-        apiKey: newApiKey,
-      })
+      await db
+        .update(userTable)
+        .set({
+          apiKey: newApiKey,
+        })
+        .where(eq(userTable.id, user.id))
 
       return c.json({
         apikey: newApiKey,

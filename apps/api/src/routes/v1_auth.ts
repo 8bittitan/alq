@@ -170,6 +170,8 @@ export function registerV1AuthRoutes(app: App) {
     })
   })
 
+  // Drizzle eslint-plugin doesn't know this is a route definition
+  // eslint-disable-next-line drizzle/enforce-delete-with-where
   app.delete('/v1/user', withUser(), async (c) => {
     const user = c.get('user')
     const session = c.get('session')

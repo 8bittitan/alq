@@ -7,7 +7,8 @@
     "deploy": "pnpm build && wrangler deploy --env staging",
     "dev": "pnpm build && wrangler dev",
     "test": "vitest --bail=1",
-    "db:push": "drizzle-kit push:sqlite"
+    "db:push": "drizzle-kit push:sqlite",
+    "lint": "eslint . --ext .ts"
   },
   "dependencies": {
     "@alq/algolia": "workspace:*",
@@ -27,8 +28,11 @@
     "@cloudflare/workers-types": "^4.20240320.1",
     "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
     "@types/node": "^20.11.30",
+    "@typescript-eslint/eslint-plugin": "^7.5.0",
+    "@typescript-eslint/parser": "^7.5.0",
     "@vitest/ui": "^1.4.0",
     "drizzle-kit": "^0.20.14",
+    "eslint-plugin-drizzle": "^0.2.3",
     "typescript": "^5.4.3",
     "vitest": "^1.4.0",
     "wrangler": "^3.37.0"

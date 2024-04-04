@@ -8,7 +8,8 @@
     "dev": "turbo dev",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "dev:web": "turbo dev --filter=!./apps/worker",
-    "start:worker": "turbo start --filter=./apps/worker"
+    "start:worker": "turbo start --filter=./apps/worker",
+    "lint": "turbo lint"
   },
   "keywords": [],
   "author": "",
