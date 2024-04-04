@@ -29,6 +29,7 @@ function jsCodeExample(apiKey: string) {
 function curlCodeExamples(apiKey: string) {
   return `curl -X POST \\
   -H "X-API-Key: ${apiKey}" \\
+  -H "Content-Type: application/json" \\
   -d '{ "payload": { "userId": 777, "postId": 1234 }, "handler": "mydomain.com/test-endpoint", "method": "POST" }' \\
   ${env.NEXT_PUBLIC_API_URL}/enqueue
 `
