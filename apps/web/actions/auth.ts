@@ -7,10 +7,10 @@ import { AuthSchema } from '@alq/validators'
 import { getSessionId } from '~/lib/api'
 import { env } from '~/lib/env'
 
-export async function register(data: FormData) {
+export async function register(input: FormData) {
   const body = AuthSchema.safeParse({
-    username: data.get('username') ?? '',
-    password: data.get('password') ?? '',
+    username: input.get('username') ?? '',
+    password: input.get('password') ?? '',
   })
 
   if (!body.success) {
@@ -38,16 +38,16 @@ export async function register(data: FormData) {
       httpOnly: true,
     })
 
-    return redirect('/app')
+    redirect('/app')
   }
 
   return resp
 }
 
-export async function login(data: FormData) {
+export async function login(input: FormData) {
   const body = AuthSchema.safeParse({
-    username: data.get('username') ?? '',
-    password: data.get('password') ?? '',
+    username: input.get('username') ?? '',
+    password: input.get('password') ?? '',
   })
 
   if (!body.success) {
@@ -75,7 +75,7 @@ export async function login(data: FormData) {
       httpOnly: true,
     })
 
-    return redirect('/app')
+    redirect('/app')
   }
 
   return resp
