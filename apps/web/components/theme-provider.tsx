@@ -7,7 +7,7 @@ export default function AppThemeProvider({ children }: PropsWithChildren) {
   return (
     <ThemeProvider
       attribute="class"
-      defaultTheme="light"
+      defaultTheme="dark"
       themes={['light', 'dark']}
       disableTransitionOnChange
     >
