@@ -1,39 +1,23 @@
 'use client'
 
 import { AlertOctagon, CheckCircle, Layers3 } from 'lucide-react'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { Job } from '@alq/validators'
 
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
 
 export default function ExplorerStats({ initialJobs }: { initialJobs: Job[] }) {
-  const [jobs, setJobs] = useState(initialJobs)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      fetch('/api/jobs', {
-        credentials: 'include',
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setJobs(data.jobs)
-        })
-    }, 5000)
-
-    return () => clearInterval(interval)
-  }, [])
-
   const failedJobs = useMemo(
-    () => jobs.filter((j) => j.status === 'failed'),
-    [jobs],
+    () => initialJobs.filter((j) => j.status === 'failed'),
+    [initialJobs],
   )
   const queuedJobs = useMemo(
-    () => jobs.filter((j) => j.status === 'queued'),
-    [jobs],
+    () => initialJobs.filter((j) => j.status === 'queued'),
+    [initialJobs],
   )
   const completedJobs = useMemo(
-    () => jobs.filter((j) => j.status === 'done'),
-    [jobs],
+    () => initialJobs.filter((j) => j.status === 'done'),
+    [initialJobs],
   )
 
   return (
